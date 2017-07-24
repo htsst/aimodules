@@ -6,14 +6,17 @@ RUN apt-get update -y && \
     bzip2 \
     gcc \
     g++ \
+    libnccl-dev \
     libibverbs-dev && \
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* 
+
+ENV OPENMPI_VERSION 2.1.1
 
 RUN wget --no-check-certificate \
-    https://www.open-mpi.org/software/ompi/v2.1/downloads/openmpi-2.1.1.tar.bz2 && \
-    tar xvjf openmpi-2.1.1.tar.bz2 && \
+    https://www.open-mpi.org/software/ompi/v2.1/downloads/openmpi-${OPENMPI_VERSION}.tar.bz2 && \
+    tar xvjf openmpi-${OPENMPI_VERSION}.tar.bz2 && \
     cd openmpi-2.1.1 && \
-    ./configure --prefix=/usr/local/openmpi-2.1.1 \
+    ./configure --prefix=/usr/local/openmpi-${OPENMPI_VERSION} \
     		-enable-orterun-prefix-by-default \
 		--enable-mpirun-prefix-by-default \
 		--enable-static \
@@ -21,3 +24,5 @@ RUN wget --no-check-certificate \
 		--with-verbs \
 		--with-cuda
 
+ENV PATH /usr/local/openmpi-${OPENMPI_VERSION}/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/openmpi-${OPENMPI_VERSION}/lib:${LD_LIBRARY_PATH}
