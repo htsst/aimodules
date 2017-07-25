@@ -6,13 +6,15 @@ RUN apt-get update -y && \
     bzip2 \
     gcc \
     g++ \
+    make \
     libnccl-dev \
     libibverbs-dev && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* 
 
 ENV OPENMPI_VERSION 2.1.1
 
-RUN wget --no-check-certificate \
+RUN cd /tmp && \
+    wget --no-check-certificate \
     https://www.open-mpi.org/software/ompi/v2.1/downloads/openmpi-${OPENMPI_VERSION}.tar.bz2 && \
     tar xvjf openmpi-${OPENMPI_VERSION}.tar.bz2 && \
     cd openmpi-2.1.1 && \
@@ -22,7 +24,9 @@ RUN wget --no-check-certificate \
 		--enable-static \
 		--enable-shared \
 		--with-verbs \
-		--with-cuda
+		--with-cuda && \
+    make -j && \
+    make install 
 
 ENV PATH /usr/local/openmpi-${OPENMPI_VERSION}/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/openmpi-${OPENMPI_VERSION}/lib:${LD_LIBRARY_PATH}
