@@ -21,7 +21,7 @@ RUN wget --no-check-certificate \
 
 WORKDIR openmpi-${OPENMPI_VERSION}
 
-RUN ./configure --prefix=/usr/local/openmpi-${OPENMPI_VERSION} \
+RUN ./configure --prefix=/opt/openmpi/${OPENMPI_VERSION} \
     		-enable-orterun-prefix-by-default \
 		--enable-mpirun-prefix-by-default \
 		--enable-static \
@@ -33,5 +33,5 @@ RUN ./configure --prefix=/usr/local/openmpi-${OPENMPI_VERSION} \
 
 WORKDIR /workspace
 
-ENV PATH /usr/local/openmpi-${OPENMPI_VERSION}/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/openmpi-${OPENMPI_VERSION}/lib:${LD_LIBRARY_PATH}
+ENV PATH /opt/openmpi/${OPENMPI_VERSION}/bin:${PATH}
+ENV LD_LIBRARY_PATH /opt/openmpi/${OPENMPI_VERSION}/lib:${LD_LIBRARY_PATH}
