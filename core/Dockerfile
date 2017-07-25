@@ -13,12 +13,15 @@ RUN apt-get update -y && \
 
 ENV OPENMPI_VERSION 2.1.1
 
-RUN cd /tmp && \
-    wget --no-check-certificate \
+WORKDIR /tmp
+
+RUN wget --no-check-certificate \
     https://www.open-mpi.org/software/ompi/v2.1/downloads/openmpi-${OPENMPI_VERSION}.tar.bz2 && \
-    tar xvjf openmpi-${OPENMPI_VERSION}.tar.bz2 && \
-    cd openmpi-2.1.1 && \
-    ./configure --prefix=/usr/local/openmpi-${OPENMPI_VERSION} \
+    tar xvjf openmpi-${OPENMPI_VERSION}.tar.bz2
+
+WORKDIR openmpi-${OPENMPI_VERSION}
+
+RUN ./configure --prefix=/usr/local/openmpi-${OPENMPI_VERSION} \
     		-enable-orterun-prefix-by-default \
 		--enable-mpirun-prefix-by-default \
 		--enable-static \
@@ -26,7 +29,9 @@ RUN cd /tmp && \
 		--with-verbs \
 		--with-cuda && \
     make -j && \
-    make install 
+    make install
+
+WORKDIR /workspace
 
 ENV PATH /usr/local/openmpi-${OPENMPI_VERSION}/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/openmpi-${OPENMPI_VERSION}/lib:${LD_LIBRARY_PATH}
