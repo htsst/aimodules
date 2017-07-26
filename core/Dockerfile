@@ -7,6 +7,7 @@ RUN apt-get update -y && \
     gcc \
     g++ \
     make \
+    openssh-client \
     libnccl-dev \
     libibverbs-dev && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* 
