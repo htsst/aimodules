@@ -6,6 +6,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
     make \
+    git \
     openssh-client \
     libnccl-dev \
     libibverbs-dev \
