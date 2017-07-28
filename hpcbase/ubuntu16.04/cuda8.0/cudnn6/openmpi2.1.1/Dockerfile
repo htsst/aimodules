@@ -13,6 +13,9 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* 
 
+ENV CPATH /usr/local/cuda/include:${CPATH}
+ENV LIBRARY_PATH /usr/local/cuda/lib64:${LIBRARY_PATH}
+
 ENV OPENMPI_VERSION 2.1.1
 
 WORKDIR /tmp
@@ -37,3 +40,5 @@ WORKDIR /
 
 ENV PATH /opt/openmpi/${OPENMPI_VERSION}/bin:${PATH}
 ENV LD_LIBRARY_PATH /opt/openmpi/${OPENMPI_VERSION}/lib:${LD_LIBRARY_PATH}
+ENV CPATH /opt/openmpi/${OPENMPI_VERSION}/include:${CPATH}
+ENV LIBRARY_PATH /opt/openmpi/${OPENMPI_VERSION}/lib:${LIBRARY_PATH}
