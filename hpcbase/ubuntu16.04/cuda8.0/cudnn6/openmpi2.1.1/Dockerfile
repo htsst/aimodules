@@ -24,7 +24,7 @@ RUN wget --no-check-certificate \
 WORKDIR openmpi-${OPENMPI_VERSION}
 
 RUN ./configure --prefix=/opt/openmpi/${OPENMPI_VERSION} \
-    		-enable-orterun-prefix-by-default \
+    		--enable-orterun-prefix-by-default \
 		--enable-mpirun-prefix-by-default \
 		--enable-static \
 		--enable-shared \
